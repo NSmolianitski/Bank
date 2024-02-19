@@ -2,6 +2,7 @@ package co.baboon.bank;
 
 import co.baboon.bank.account.AccountController;
 import co.baboon.bank.authorization.AuthorizationConfiguration;
+import co.baboon.bank.transfer.TransferConfiguration;
 import co.baboon.bank.user.UserConfiguration;
 import co.baboon.bank.utilities.UtilitiesConfiguration;
 import com.zaxxer.hikari.HikariConfig;
@@ -21,7 +22,8 @@ import javax.sql.DataSource;
         AuthorizationConfiguration.class,
         UtilitiesConfiguration.class,
         UserConfiguration.class,
-        AccountController.class
+        AccountController.class,
+        TransferConfiguration.class
 })
 @Configuration
 public class MainConfiguration {
