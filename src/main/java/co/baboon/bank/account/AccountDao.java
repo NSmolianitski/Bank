@@ -19,7 +19,8 @@ public class AccountDao {
     private final List<TableField<AccountsRecord, ?>> ACCOUNT_FIELDS = List.of(
             ACCOUNTS.ID,
             ACCOUNTS.MONEY,
-            ACCOUNTS.CURRENCY
+            ACCOUNTS.CURRENCY,
+            ACCOUNTS.OWNER_ID
     );
 
     public AccountDao(DSLContext context) {
@@ -32,6 +33,14 @@ public class AccountDao {
                 .from(ACCOUNTS)
                 .where(ACCOUNTS.ID.eq(id))
                 .fetchOptional(AccountDao::buildAccount);
+    }
+    
+    public Boolean isOwnerOfAccount(Integer userId, Integer accountId) {
+        return context
+                .select(ACCOUNT_FIELDS)
+                .from(ACCOUNTS)
+                .where(ACCOUNTS.OWNER_ID.eq(userId).and(ACCOUNTS.ID.eq(accountId)))
+                .fetch().isNotEmpty();
     }
     
     public Optional<Account> createAccount(Integer ownerId, String currency) {

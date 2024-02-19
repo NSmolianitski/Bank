@@ -19,7 +19,10 @@ public class AccountController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getAccount(@PathVariable Integer id) { return getAccountHandler.handle(id); }
+    public ResponseEntity<?> getAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+                                        @PathVariable Integer id) {
+        return getAccountHandler.handle(authorization, id);
+    }
     
     @PostMapping("create")
     public ResponseEntity<?> createAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,

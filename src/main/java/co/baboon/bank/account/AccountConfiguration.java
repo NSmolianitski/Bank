@@ -13,7 +13,9 @@ public class AccountConfiguration {
     public AccountDao accountDao(DSLContext context) { return new AccountDao(context); }
     
     @Bean
-    public GetAccountHandler getAccountHandler(AccountDao accountDao) { return new GetAccountHandler(accountDao); }
+    public GetAccountHandler getAccountHandler(AccountDao accountDao, JwtUtility jwtUtility) {
+        return new GetAccountHandler(accountDao, jwtUtility);
+    }
     
     @Bean
     public CreateAccountHandler createAccountHandler(AccountDao accountDao, JwtUtility jwtUtility) {
