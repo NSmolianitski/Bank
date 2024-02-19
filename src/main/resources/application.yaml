@@ -1,0 +1,3 @@
+jwt:
+  secret: kRg8iLaoAop2_Zrzxx0EgPvcGIbHBQPENXSm6wr-DJU
+  lifetime: PT1000H

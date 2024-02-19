@@ -1,0 +1,10 @@
+services: 
+  postgresDb:
+    image: postgres
+    environment:
+      POSTGRES_DB: BankDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      
+    ports:
+      - "5432:5432"
