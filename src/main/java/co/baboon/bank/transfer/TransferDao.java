@@ -20,6 +20,7 @@ public class TransferDao {
     private final List<TableField<TransfersRecord, ?>> TRANSFER_FIELDS = List.of(
             TRANSFERS.ID,
             TRANSFERS.OPERATION_ID,
+            TRANSFERS.DATE,
             TRANSFERS.FROM_ACCOUNT_ID,
             TRANSFERS.TO_ACCOUNT_ID,
             TRANSFERS.MONEY,
@@ -39,6 +40,18 @@ public class TransferDao {
                 .fetchOptional(TransferDao::buildTransfer);
     }
     
+    public void addTransfer(Transfer transfer) {
+        context.insertInto(TRANSFERS)
+                .set(TRANSFERS.OPERATION_ID, transfer.operationId())
+                .set(TRANSFERS.DATE, transfer.date())
+                .set(TRANSFERS.FROM_ACCOUNT_ID, transfer.fromAccountId())
+                .set(TRANSFERS.TO_ACCOUNT_ID, transfer.toAccountId())
+                .set(TRANSFERS.CURRENCY, transfer.money().getCurrencyUnit().toString())
+                .set(TRANSFERS.MONEY, transfer.money().getAmount())
+                .set(TRANSFERS.OPERATION_TYPE, transfer.operationType().toString())
+                .execute();
+    }
+    
     private static Transfer buildTransfer(Record record) {
         var currency = CurrencyUnit.of(record.get(TRANSFERS.CURRENCY));
         var money = Money.of(currency, record.get(TRANSFERS.MONEY));
@@ -46,6 +59,7 @@ public class TransferDao {
         return Transfer.builder()
                 .withId(record.get(TRANSFERS.ID))
                 .withOperationId(record.get(TRANSFERS.OPERATION_ID))
+                .withDate(record.get(TRANSFERS.DATE))
                 .withFromAccountId(record.get(TRANSFERS.FROM_ACCOUNT_ID))
                 .withToAccountId(record.get(TRANSFERS.TO_ACCOUNT_ID))
                 .withMoney(money)
