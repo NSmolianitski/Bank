@@ -5,6 +5,7 @@ import co.baboon.bank.transfer.Transfer;
 import co.baboon.bank.transfer.TransferDao;
 import co.baboon.bank.transfer.dto.WithdrawDto;
 import co.baboon.bank.transfer.enums.TransferOperationType;
+import co.baboon.bank.utilities.MoneyUtility;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,9 @@ public class WithdrawHandler {
         if (account.money().getAmount().compareTo(withdrawDto.money()) < 0)
             return ResponseEntity.ok("Not enough money.");
         
-        var money = Money.of(CurrencyUnit.of(withdrawDto.currency()), withdrawDto.money());
-        if (!accountDao.withdrawMoney(withdrawDto.accountId(), money))
-            return ResponseEntity.ok("Withdraw failure.");
-            
+        var money = MoneyUtility.createMoney(withdrawDto.money(), withdrawDto.currency());
+        accountDao.withdrawMoney(withdrawDto.accountId(), money);
+        
         var transfer = Transfer.builder()
                 .withOperationId(UUID.randomUUID())
                 .withFromAccountId(withdrawDto.accountId())

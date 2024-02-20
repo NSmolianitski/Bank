@@ -5,10 +5,12 @@ import co.baboon.bank.transfer.Transfer;
 import co.baboon.bank.transfer.TransferDao;
 import co.baboon.bank.transfer.dto.DepositDto;
 import co.baboon.bank.transfer.enums.TransferOperationType;
+import co.baboon.bank.utilities.MoneyUtility;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.http.ResponseEntity;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class DepositHandler {
@@ -26,15 +28,17 @@ public class DepositHandler {
             return ResponseEntity.ok("Account not found.");
         var account = optionalAccount.get();
         
-        var currency = CurrencyUnit.of(depositDto.currency());
-        var money = Money.of(currency, depositDto.money());
+        var money = MoneyUtility.createMoney(depositDto.money(), depositDto.currency());
         
-        var currencyEquals = account.money().getCurrencyUnit().equals(currency);
+        var currencyEquals = account.money().getCurrencyUnit().equals(money.getCurrencyUnit());
         if (!currencyEquals)
             return ResponseEntity.ok("The account currency is different from the deposit currency.");
         
-        if (!accountDao.addMoney(depositDto.accountId(), money))
-            return ResponseEntity.ok("Operation failed.");
+        try {
+            accountDao.addMoney(depositDto.accountId(), money);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.ok(e.getMessage());
+        }
         
         var transfer = Transfer.builder()
                 .withOperationId(UUID.randomUUID())

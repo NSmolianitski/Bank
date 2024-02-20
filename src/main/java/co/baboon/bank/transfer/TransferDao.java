@@ -2,6 +2,7 @@ package co.baboon.bank.transfer;
 
 import co.baboon.bank.jooq.tables.records.TransfersRecord;
 import co.baboon.bank.transfer.enums.TransferOperationType;
+import co.baboon.bank.utilities.MoneyUtility;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.jooq.DSLContext;
@@ -53,8 +54,7 @@ public class TransferDao {
     }
     
     private static Transfer buildTransfer(Record record) {
-        var currency = CurrencyUnit.of(record.get(TRANSFERS.CURRENCY));
-        var money = Money.of(currency, record.get(TRANSFERS.MONEY));
+        var money = MoneyUtility.createMoney(record.get(TRANSFERS.MONEY), record.get(TRANSFERS.CURRENCY));
         var operationType = TransferOperationType.valueOf(record.get(TRANSFERS.OPERATION_TYPE));
         return Transfer.builder()
                 .withId(record.get(TRANSFERS.ID))
