@@ -6,6 +6,7 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.SelectField;
 import org.jooq.TableField;
 
 import java.math.BigDecimal;
@@ -41,6 +42,26 @@ public class AccountDao {
                 .from(ACCOUNTS)
                 .where(ACCOUNTS.OWNER_ID.eq(userId).and(ACCOUNTS.ID.eq(accountId)))
                 .fetch().isNotEmpty();
+    }
+    
+    public Boolean addMoney(Integer accountId, Money money) {
+        var optionalMoney = getMoney(accountId);
+        if (optionalMoney.isEmpty())
+            return false;
+        
+        var newMoney = optionalMoney.get().getAmount().add(money.getAmount());
+        var result = context
+                .update(ACCOUNTS)
+                .set(ACCOUNTS.CURRENCY, money.getCurrencyUnit().toString())
+                .set(ACCOUNTS.MONEY, newMoney)
+                .where(ACCOUNTS.ID.eq(accountId))
+                .execute();
+        return result != 0;
+    }
+    
+    public Optional<Money> getMoney(Integer accountId) {
+        var optionalAccount = tryGetAccountById(accountId);
+        return optionalAccount.map(Account::money);
     }
     
     public Optional<Account> createAccount(Integer ownerId, String currency) {
