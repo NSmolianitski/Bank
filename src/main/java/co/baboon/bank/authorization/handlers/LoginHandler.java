@@ -24,10 +24,10 @@ public class LoginHandler {
             return ResponseEntity.ok("User not found");
         
         var user = optionalUser.get();
-        if (!passwordEncoder.matches(requestDto.password(), user.getPassword()))
+        if (!passwordEncoder.matches(requestDto.password(), user.password()))
             return ResponseEntity.ok("Wrong password");
         
-        var jwt = jwtUtility.createJwtWithUserId(user.getId());        
+        var jwt = jwtUtility.createJwtWithUserId(user.id());        
         return ResponseEntity.ok(jwt);
     }
 }

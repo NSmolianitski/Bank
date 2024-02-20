@@ -47,9 +47,9 @@ public class UserDao {
     
     public Optional<User> addUser(User user) {
         return context.insertInto(USERS)
-                .set(USERS.NAME, user.getName())
-                .set(USERS.LOGIN, user.getLogin())
-                .set(USERS.PASSWORD, user.getPassword())
+                .set(USERS.NAME, user.name())
+                .set(USERS.LOGIN, user.login())
+                .set(USERS.PASSWORD, user.password())
                 .returning()
                 .fetchOptional(UserDao::buildUser);
     }

@@ -37,7 +37,7 @@ public class RegisterHandler {
             return ResponseEntity.internalServerError().build();
         var userFromDb = optionalUserFromDb.get();
         
-        var jwt = jwtUtility.createJwtWithUserId(userFromDb.getId());
+        var jwt = jwtUtility.createJwtWithUserId(userFromDb.id());
         
         return ResponseEntity.ok(jwt);
     }
