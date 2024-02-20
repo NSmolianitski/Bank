@@ -59,7 +59,7 @@ public class TransferDao {
         return Transfer.builder()
                 .withId(record.get(TRANSFERS.ID))
                 .withOperationId(record.get(TRANSFERS.OPERATION_ID))
-                .withDate(record.get(TRANSFERS.DATE))
+                .withDateNow()
                 .withFromAccountId(record.get(TRANSFERS.FROM_ACCOUNT_ID))
                 .withToAccountId(record.get(TRANSFERS.TO_ACCOUNT_ID))
                 .withMoney(money)

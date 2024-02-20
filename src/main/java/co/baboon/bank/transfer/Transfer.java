@@ -55,6 +55,11 @@ public record Transfer(
             return this;
         }
 
+        public Builder withDateNow() {
+            this.date = LocalDateTime.now();
+            return this;
+        }
+        
         public Builder withDate(LocalDateTime date) {
             this.date = date;
             return this;

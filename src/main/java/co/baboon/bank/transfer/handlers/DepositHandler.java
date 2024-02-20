@@ -9,7 +9,6 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class DepositHandler {
@@ -39,7 +38,7 @@ public class DepositHandler {
         
         var transfer = Transfer.builder()
                 .withOperationId(UUID.randomUUID())
-                .withDate(LocalDateTime.now())
+                .withDateNow()
                 .withMoney(money)
                 .withToAccountId(depositDto.accountId())
                 .withOperationType(TransferOperationType.DEPOSIT)
