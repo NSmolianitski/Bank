@@ -6,8 +6,6 @@ import co.baboon.bank.transfer.TransferDao;
 import co.baboon.bank.transfer.dto.DepositDto;
 import co.baboon.bank.transfer.enums.TransferOperationType;
 import co.baboon.bank.utilities.MoneyUtility;
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
 import org.springframework.http.ResponseEntity;
 
 import java.util.NoSuchElementException;

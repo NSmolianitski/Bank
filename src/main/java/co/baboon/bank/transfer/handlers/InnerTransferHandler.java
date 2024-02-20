@@ -1,7 +1,6 @@
 package co.baboon.bank.transfer.handlers;
 
 import co.baboon.bank.account.AccountDao;
-import co.baboon.bank.account.exceptions.NotEnoughMoneyException;
 import co.baboon.bank.transfer.Transfer;
 import co.baboon.bank.transfer.TransferDao;
 import co.baboon.bank.transfer.dto.InnerTransferDto;
@@ -9,7 +8,6 @@ import co.baboon.bank.transfer.enums.TransferOperationType;
 import co.baboon.bank.utilities.MoneyUtility;
 import org.springframework.http.ResponseEntity;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class InnerTransferHandler {

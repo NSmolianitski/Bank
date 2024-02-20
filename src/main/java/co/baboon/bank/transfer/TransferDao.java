@@ -3,8 +3,6 @@ package co.baboon.bank.transfer;
 import co.baboon.bank.jooq.tables.records.TransfersRecord;
 import co.baboon.bank.transfer.enums.TransferOperationType;
 import co.baboon.bank.utilities.MoneyUtility;
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.TableField;
