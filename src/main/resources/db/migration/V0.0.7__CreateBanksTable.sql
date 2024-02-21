@@ -1,0 +1,5 @@
+CREATE TABLE banks(
+    id      SERIAL PRIMARY KEY,
+    code    INTEGER UNIQUE NOT NULL,
+    name    VARCHAR(255) UNIQUE 
+)
