@@ -1,0 +1,1 @@
+ALTER TABLE transfers ALTER COLUMN operation_type TYPE VARCHAR(50)
